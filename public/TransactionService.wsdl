@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:tns="http://localhost:8001/server.php"
+    targetNamespace="http://localhost:8001/server.php"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    name="TransactionService">
+
+  <!-- TYPES -->
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://localhost:8001/server.php"
+                  schemaLocation="transaction-types.xsd"/>
+    </xsd:schema>
+  </types>
+
+  <!-- MESSAGES -->
+  <message name="CreateTransactionRequest">
+    <part name="transaction" element="tns:TransactionType"/>
+  </message>
+  <message name="CreateTransactionResponse">
+    <part name="result" type="xsd:string"/>
+  </message>
+
+  <message name="GetTransactionRequest">
+    <part name="id" type="xsd:int"/>
+  </message>
+  <message name="GetTransactionResponse">
+    <part name="transaction" element="tns:TransactionType"/>
+  </message>
+  <message name="UpdateTransactionRequest">
+    <part name="transaction" element="tns:TransactionType"/>
+  </message>
+  <message name="UpdateTransactionResponse">
+    <part name="success" type="xsd:boolean"/>
+  </message>
+
+  <message name="DeleteTransactionRequest">
+    <part name="id" type="xsd:int"/>
+  </message>
+  <message name="DeleteTransactionResponse">
+    <part name="success" type="xsd:boolean"/>
+  </message>
+
+  <!-- PORT TYPE = liste des opérations -->
+  <portType name="TransactionPortType">
+    <operation name="createTransaction">
+      <input message="tns:CreateTransactionRequest"/>
+      <output message="tns:CreateTransactionResponse"/>
+    </operation>
+    <operation name="getTransaction">
+      <input message="tns:GetTransactionRequest"/>
+      <output message="tns:GetTransactionResponse"/>
+    </operation>
+    <!-- Update, Delete idem -->
+    <operation name="updateTransaction">
+      <input message="tns:UpdateTransactionRequest"/>
+      <output message="tns:UpdateTransactionResponse"/>
+    </operation>
+    <operation name="deleteTransaction">
+      <input message="tns:DeleteTransactionRequest"/>
+      <output message="tns:DeleteTransactionResponse"/>
+    </operation>
+  </portType>
+
+  <!-- BINDING -->
+  <binding name="TransactionBinding" type="tns:TransactionPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="createTransaction">
+      <soap:operation soapAction="createTransaction"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="getTransaction">
+      <soap:operation soapAction="getTransaction"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="updateTransaction">
+      <soap:operation soapAction="updateTransaction"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <operation name="deleteTransaction">
+      <soap:operation soapAction="deleteTransaction"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+<service name="TransactionService">
+    <port name="TransactionPort" binding="tns:TransactionBinding">
+        <soap:address location="http://localhost:8001/server.php"/>
+    </port>
+</service>
+
+
+</definitions>

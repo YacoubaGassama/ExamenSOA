@@ -1,0 +1,14 @@
+{
+    "name": "myvendor1/soa2025_tp2",
+    "description": "mon doc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "laminas/laminas-soap": "^2.14"
+    }
+}

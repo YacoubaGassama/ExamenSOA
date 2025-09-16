@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://localhost:8001/server.php"
+            xmlns:tns="http://localhost:8001/server.php"
+            attributeFormDefault="unqualified"
+            elementFormDefault="qualified">
+
+  <!-- Définition d'un type Transaction -->
+  <xsd:complexType name="TransactionType">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:int"/>
+      <xsd:element name="date" type="xsd:date"/>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="montant" type="xsd:decimal"/>
+      <xsd:element name="tel_expediteur" type="xsd:string"/>
+      <xsd:element name="tel_destinataire" type="xsd:string"/>
+      <xsd:element name="nom_expediteur" type="xsd:string"/>
+      <xsd:element name="nom_destinataire" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Input simplifié pour la création d’une tranction -->
+   <xsd:complexType name="TransactionInput">
+    <xsd:sequence>
+      <xsd:element name="date" type="xsd:date" />
+      <xsd:element name="type" type="xsd:string" />
+      <xsd:element name="montant" type="xsd:decimal" />
+      <xsd:element name="tel_expediteur" type="xsd:string" />
+      <xsd:element name="tel_destinataire" type="xsd:string" />
+      <xsd:element name="nom_expediteur" type="xsd:string" />
+      <xsd:element name="nom_destinataire" type="xsd:string" />
+    </xsd:sequence>
+   </xsd:complexType>
+
+   <!-- ====== Opérations : éléments Request/Response ====== -->
+    <!-- CreateTransaction -->
+    <xsd:element name="CreateTransactionRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transaction" type="tns:TransactionInput" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="CreateTransactionResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="success" type="xsd:boolean" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- GetTransaction -->
+    <xsd:element name="GetTransactionRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transactionId" type="xsd:int" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GetTransactionResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transaction" type="tns:TransactionType" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- UpdateTransaction -->
+    <xsd:element name="UpdateTransactionRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transaction" type="tns:TransactionInput" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="UpdateTransactionResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="success" type="xsd:boolean" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- DeleteTransaction -->
+    <xsd:element name="DeleteTransactionRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transactionId" type="xsd:int" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="DeleteTransactionResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="success" type="xsd:boolean" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <!-- Fault -->
+    <xsd:element name="ServiceFault">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="code" type="xsd:string" />
+                <xsd:element name="message" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
